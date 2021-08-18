@@ -104,10 +104,16 @@ def ValidTitles(invalidPLaylist):
 
 
 def SearchForItems(titles,object):
+    notfound = []
     elements = []
     for item in titles:
         elementId = object.search(q=item,limit=1,type='track')
-        elements.append(elementId['tracks']['items'][0]['uri'])
+        if elementId['tracks']['total'] ==0:
+            print(f'Nie znaleziono utworu: {item}')
+            notfounf.append(item)
+        else:
+            print(f'Szukanie utworu: {item}')
+            elements.append(elementId['tracks']['items'][0]['uri'])
     return elements
 
 def MakeAddItemsToPlaylist(elements,spotifyObject, clientId, clientSecret, redirect_uri, username ):
